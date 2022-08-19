@@ -1,0 +1,22 @@
+[tool.poetry]
+name = "statistic"
+version = "0.1.0"
+description = "Курсовая по ТМОИ"
+authors = ["ArthurGolubev <gg.arthur.go@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.12"
+numpy = "^1.23.2"
+scipy = "^1.9.0"
+fastapi = "^0.79.0"
+uvicorn = {extras = ["standard"], version = "^0.18.2"}
+loguru = "^0.6.0"
+plotly = "^5.10.0"
+pandas = "^1.4.3"
+strawberry-graphql = "^0.125.1"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

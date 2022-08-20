@@ -44,7 +44,7 @@ export const NormalDistribution = () => {
                 <div className='input-group input-group-sm mb-3'>
                     <span className='input-group-text'><i>n:</i></span>
                     <input id={"normal-distribution"+iter} type='number' className='form-control' placeholder='Количество наблюдений...' />
-                    {/* <span className='input-group-text'></span> */}
+                    <span className='input-group-text'></span>
                     <button onClick={()=>calculate(document.querySelector("#normal-distribution"+iter), iter+1)} 
                     className='btn btn-sm btn-success' type='button'>Расчитать</button>
                 </div>

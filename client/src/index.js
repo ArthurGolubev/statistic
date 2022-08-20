@@ -5,6 +5,7 @@ import { App } from './App'
 import { HashRouter } from 'react-router-dom'
 import * as bootstrap from 'bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
+import { MathJaxContext } from 'better-react-mathjax'
 
 
 
@@ -26,7 +27,9 @@ const createApolloClient = () => {
 root.render(
     <ApolloProvider client={createApolloClient()}>
         <HashRouter>
-            <App />
+            <MathJaxContext>
+                <App />
+            </MathJaxContext>
         </HashRouter>
     </ApolloProvider>
 )

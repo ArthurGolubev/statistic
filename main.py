@@ -8,7 +8,7 @@ from fastapi.staticfiles import StaticFiles
 
 app = FastAPI()
 
-app.mount('/static', StaticFiles(directory='client'), name="something")
+app.mount('/', StaticFiles(directory='client', html=True), name="something")
 
 
 @strawberry.type

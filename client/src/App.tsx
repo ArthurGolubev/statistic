@@ -8,7 +8,7 @@ import { Task_1_2 } from './tasks/Task_1_2'
 export const App = () => {
     return <div>
         <Navbar />
-        <div className='m-1'>
+        <div className='m-3'>
             <Routes>
                 <Route path='task-1-1' element={<Task_1_1 />} />
                 <Route path='task-1-2' element={<Task_1_2 />} />

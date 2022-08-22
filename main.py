@@ -4,7 +4,9 @@ from strawberry.fastapi import GraphQLRouter
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
 
-from calculations.distributions import exponential_distribution, normal_distribution, uniform_distribution
+from calculations.distributions.uniform import uniform
+from calculations.distributions.normal import normal
+from calculations.distributions.exponential import exponential
 
 
 app = FastAPI()
@@ -22,18 +24,18 @@ class Statistic:
 
 @strawberry.type
 class Query:
-
-    @strawberry.field
-    def normal_distribution_statistic(n: int) -> Statistic:
-        return Statistic(*normal_distribution(n))
     
     @strawberry.field
-    def uniform_distribution_statistic(n: int) -> Statistic:
-        return Statistic(*uniform_distribution(n))
+    def uniform_distribution_statistic(sampleSize: int) -> Statistic:
+        return Statistic(*uniform(sampleSize))
 
     @strawberry.field
-    def exponential_distribution_statistic(n: int) -> Statistic:
-        return Statistic(*exponential_distribution(n))
+    def normal_distribution_statistic(sampleSize: int) -> Statistic:
+        return Statistic(*normal(sampleSize))
+
+    @strawberry.field
+    def exponential_distribution_statistic(sampleSize: int) -> Statistic:
+        return Statistic(*exponential(sampleSize))
 
 
 

@@ -1,7 +1,3 @@
-// TODO 1. Сгенерировать выборку
-// TODO 2. Расчитать оценки МО, Д, СР.откл
-// TODO 3. Построить оценку ФРВ
-
 import { useLazyQuery } from '@apollo/client'
 import { MathJax } from 'better-react-mathjax'
 import * as React from 'react'
@@ -17,7 +13,8 @@ export const Task_1_1 = () => {
         standardDeviation: null,
         cdf: [],
         x: [],
-        title: "Равномерное распределение"})
+        title: "Равномерное распределение"
+    })
 
     const [uniformDistribution] = useLazyQuery(GET_UNIFORM_DISTRIBUTION)            // Равномерное
     const [normalDistribution] = useLazyQuery(GET_NORMAL_DISTRIBUTION)              // Нормальный
@@ -28,7 +25,7 @@ export const Task_1_1 = () => {
         switch(distribution){
             case "1":
                 uniformDistribution({
-                    variables: {n: parseInt(n.value)},
+                    variables: {sampleSize: parseInt(n.value)},
                     fetchPolicy: "network-only",
                     onCompleted: data => setState({
                         ...data.uniformDistributionStatistic,
@@ -38,7 +35,7 @@ export const Task_1_1 = () => {
                 break;
             case "2":
                 normalDistribution({
-                    variables: {n: parseInt(n.value)},
+                    variables: {sampleSize: parseInt(n.value)},
                     fetchPolicy: "network-only",
                     onCompleted: data => setState({
                         ...data.normalDistributionStatistic,
@@ -48,7 +45,7 @@ export const Task_1_1 = () => {
                 break;
             case "3":
                 exponentialDistribution({
-                    variables: {n: parseInt(n.value)},
+                    variables: {sampleSize: parseInt(n.value)},
                     fetchPolicy: "network-only",
                     onCompleted: data => setState({
                         ...data.exponentialDistributionStatistic,
@@ -64,13 +61,13 @@ export const Task_1_1 = () => {
         <h5 className='text-center mb-4'>Разработать програмное обеспечение реализующее расчёт основных характеристик распределения случайных велечин</h5>
         <div className='row mt-5'>
             {/* Описание задания */}
-            <h6 className=''>Задание 1.2</h6>
+            <h6 className=''>Задание 1.1</h6>
             <div className='col-10'>
                 <ol>
                     <li>
                         <p>
                             Сгенерировать выборку <MathJax inline={true}>{"\\(\\ (x^i, i=\\overline{1,n}) \\)"}</MathJax>,
-                            используя датчики случайных велечин с <b>равномерным</b>, <b>нормальным</b> и <b>показательным</b> законами распределения
+                            используя датчики случайных величин с <b>равномерным</b>, <b>нормальным</b> и <b>показательным</b> законами распределения
                             на интервале <b>[0;1]</b>. Задать обём выборки <MathJax inline={true}>{"\\(\\ n \\)"}</MathJax>
                         </p>
                     </li>
@@ -81,7 +78,7 @@ export const Task_1_1 = () => {
                     </li>
                     <li>
                         <p>
-                            Построить оценку функции распределения случайной велечины <MathJax inline={true}>{"\\(\\ x \\)"}</MathJax>
+                            Построить оценку функции распределения случайной величины <MathJax inline={true}>{"\\(\\ x \\)"}</MathJax>
                         </p>
                     </li>
                 </ol>

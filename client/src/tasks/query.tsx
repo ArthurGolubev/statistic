@@ -1,8 +1,8 @@
 import {gql} from '@apollo/client'
 
 export const GET_UNIFORM_DISTRIBUTION = gql`
-    query get_uniform_distribution_query($n: Int!){
-        uniformDistributionStatistic(n: $n){
+    query get_uniform_distribution_query($sampleSize: Int!){
+        uniformDistributionStatistic(sampleSize: $sampleSize){
             array
             variance
             mean
@@ -12,8 +12,8 @@ export const GET_UNIFORM_DISTRIBUTION = gql`
     }
 `
 export const GET_NORMAL_DISTRIBUTION = gql`
-    query get_normal_distribution_query($n: Int!){
-        normalDistributionStatistic(n: $n){
+    query get_normal_distribution_query($sampleSize: Int!){
+        normalDistributionStatistic(sampleSize: $sampleSize){
             array
             variance
             mean
@@ -23,8 +23,8 @@ export const GET_NORMAL_DISTRIBUTION = gql`
     }
 `
 export const GET_EXPONENTIAL_DISTRIBUTION = gql`
-    query get_exponential_distribution_query($n: Int!){
-        exponentialDistributionStatistic(n: $n){
+    query get_exponential_distribution_query($sampleSize: Int!){
+        exponentialDistributionStatistic(sampleSize: $sampleSize){
             array
             variance
             mean

@@ -1,33 +1,18 @@
 import { useLazyQuery } from '@apollo/client'
 import { MathJax } from 'better-react-mathjax'
 import * as React from 'react'
-import { GET_EXPONENTIAL_DISTRIBUTION, GET_NORMAL_DISTRIBUTION, GET_UNIFORM_DISTRIBUTION } from './query'
+import Plot from 'react-plotly.js'
+import { EVALUATE_EQUALITY_CDF } from './query'
 
 export const Task_1_2 = () => {
 
-    const [uniformDistribution] = useLazyQuery(GET_UNIFORM_DISTRIBUTION)            // Равномерное
-    const [normalDistribution] = useLazyQuery(GET_NORMAL_DISTRIBUTION)              // Нормальный
-    const [exponentialDistribution] = useLazyQuery(GET_EXPONENTIAL_DISTRIBUTION)    // Показательное
+    const [evaluateEqualityCdf] = useLazyQuery(EVALUATE_EQUALITY_CDF)
 
     const [state, setState] = React.useState({
-        n: {
-            mean: null,
-            array: [],
-            variance: null,
-            standardDeviation: null,
-            cdf: [],
-            x: [],
-            title: "Равномерное распределение"
-        },
-        m: {
-            mean: null,
-            array: [],
-            variance: null,
-            standardDeviation: null,
-            cdf: [],
-            x: [],
-            title: "Равномерное распределение"
-        }
+        cdf1: [],
+        cdf2: [],
+        array1: [],
+        array2: [],
     })
 
     const calculateRvs = () => {
@@ -36,55 +21,21 @@ export const Task_1_2 = () => {
         let nDistribution = (document.querySelector("#n-distribution") as HTMLSelectElement).value
         let mDistribution = (document.querySelector("#m-distribution") as HTMLSelectElement).value
         let a = parseInt((document.querySelector("#a") as HTMLInputElement).value)
-
-        const getSample = (type: string, sample: string, sampleSize: number) => {
-            console.log(sample)
-            switch(type){
-                case "1":
-                    uniformDistribution({
-                        variables: {sampleSize},
-                        fetchPolicy: "network-only",
-                        onCompleted: data => setState({
-                            ...state,
-                            [sample]: {
-                                ...data.uniformDistributionStatistic,
-                                title: "Равномерное распределение"
-                            }
-                            
-                        })
-                    })
-                    break;
-                case "2":
-                    normalDistribution({
-                        variables: {sampleSize},
-                        fetchPolicy: "network-only",
-                        onCompleted: data => setState({
-                            ...state,
-                            [sample]: {
-                                ...data.normalDistributionStatistic,
-                                title: "Нормальное распределение"
-                            }
-                        })
-                    })
-                    break;
-                case "3":
-                    exponentialDistribution({
-                        variables: {sampleSize},
-                        fetchPolicy: "network-only",
-                        onCompleted: data => setState({
-                            ...state,
-                            [sample]: {
-                                ...data.exponentialDistributionStatistic,
-                                title: "Показательно распределение"
-                            }
-                        })
-                    })
-                    break;
+        const dist = (distType: string) => {
+            switch(distType){
+                case '1':
+                    return 'uniform'
+                case '2':
+                    return 'normal'
+                case '3':
+                    return 'exponential'
             }
         }
-
-        getSample(nDistribution, 'n', n)
-        getSample(mDistribution, 'm', m)
+        evaluateEqualityCdf({
+            variables: {n, m, nDistribution: dist(nDistribution), mDistribution: dist(mDistribution), a},
+            fetchPolicy: "network-only",
+            onCompleted: data => setState(data.evaluateEqualityCdf)
+        })
 
 
     }
@@ -195,6 +146,33 @@ export const Task_1_2 = () => {
                 </div>
             </div>
         </div>
+        {/* Оценка ФРВ */}
+        {
+            state.cdf1 && <Plot
+            data={[
+                {
+                    x: state.array1,
+                    y: state.cdf1,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                },
+                {
+                    x: state.array2,
+                    y: state.cdf2,
+                    type: 'scatter',
+                    mode: 'lines+markers',
+                }
+            ]}
+            layout={{
+                // title: state.title,
+                xaxis: {
+                    title: "x"
+                },
+                yaxis: {
+                    title: "P(x)"
+                }
+            }}
+        />}
         <button onClick={()=>console.log(state)} className='btn btn-sm btn-success' type='button'>state</button>
     </div>
 }

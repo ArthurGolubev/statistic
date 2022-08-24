@@ -10,6 +10,7 @@ class Statistic(NamedTuple):
 
 
 class CompareCDF(NamedTuple):
-    cdf_1:  list[float]
-    cdf_2:  list[float]
-    
+    cdf_1:      list[float]
+    cdf_2:      list[float]
+    array_1:    list[float]
+    array_2:    list[float]

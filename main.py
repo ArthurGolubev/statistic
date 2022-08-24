@@ -23,8 +23,10 @@ class Statistic:
 
 @strawberry.type
 class ComparisonCDF:
-    cdf_1: list[float]
-    cdf_2: list[float]
+    cdf_1:      list[float]
+    cdf_2:      list[float]
+    array_1:    list[float]
+    array_2:    list[float]
 
 
 
@@ -45,18 +47,8 @@ class Query:
 
     @strawberry.field
     def evaluate_equality_cdf(n: int, m: int, n_distribution: str, m_distribution: str, a: int) -> ComparisonCDF:
-        def cdf(distribution_type: str, sampleSize: int) -> Statistic:
-            if distribution_type == 'uniform':
-                return uniform(sampleSize)
-            elif distribution_type == 'normal':
-                return normal(sampleSize)
-            elif distribution_type == 'exponential':
-                return exponential(sampleSize)
-            
-        cdf_1 = cdf(n_distribution, n)
-        cdf_2 = cdf(m_distribution, m)
-        comp = compare_cdf(cdf_1, cdf_2)
-        return ComparisonCDF()
+        c = compare_cdf(n, m, n_distribution, m_distribution, a)
+        return ComparisonCDF(*c)
 
 
 

@@ -45,7 +45,8 @@ export const Task_1_1 = () => {
                 break;
             case "3":
                 exponentialDistribution({
-                    variables: {sampleSize: parseInt(n.value)},
+                    variables: {sampleSize
+                        : parseInt(n.value)},
                     fetchPolicy: "network-only",
                     onCompleted: data => setState({
                         ...data.exponentialDistributionStatistic,

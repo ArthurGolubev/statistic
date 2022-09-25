@@ -6,7 +6,7 @@ from ..types import Statistic
 
 
 def normal(n: int=500) -> Statistic:
-    """Нормальный закон распределения"""
+    """ Нормальный закон распределения """
     d = norm(loc=0.5, scale=0.5)
     array = d.rvs(size=n)
     v = array.var()

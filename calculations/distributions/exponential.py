@@ -6,7 +6,10 @@ from ..types import Statistic
 
 
 def exponential(n: int=10000) -> Statistic:
-    """Показательный закон распределения"""
+    """ Показательный закон распределения """
+    
+    #  TODO 1. что такое k в x = t * (eps ** ( 1/(k +1) ))
+
     d = expon(loc=0.5, scale=0.5)
     array = d.rvs(size=n)
     v = array.var()

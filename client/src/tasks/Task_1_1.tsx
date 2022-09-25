@@ -126,7 +126,7 @@ export const Task_1_1 = () => {
                             <div className="card card-body">
                                 [
                                     <ol>
-                                        {state.array.map(item => <li>{item}</li>)}
+                                        {state.array.map((item, iter) => <li key={iter}>{item}</li>)}
                                     </ol>
                                 ]
                             </div>

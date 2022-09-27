@@ -1,4 +1,5 @@
 import strawberry
+import csv
 from loguru import logger
 from strawberry.fastapi import GraphQLRouter
 from fastapi import FastAPI
@@ -28,7 +29,9 @@ class ComparisonCDF:
     array_1:    list[float]
     array_2:    list[float]
 
-
+@strawberry.type
+class ANOVA:
+    data: list[list[int]]
 
 @strawberry.type
 class Query:
@@ -49,6 +52,15 @@ class Query:
     def evaluate_equality_cdf(n: int, m: int, n_distribution: str, m_distribution: str, a: int) -> ComparisonCDF:
         c = compare_cdf(n, m, n_distribution, m_distribution, a)
         return ComparisonCDF(*c)
+    
+    @strawberry.field
+    def upload_data(data: str) -> ANOVA:
+        logger.info(f"{data=}")
+        res = csv.reader(data.strip().split('\n'), delimiter=',', quoting=csv.QUOTE_NONNUMERIC, skipinitialspace=True)
+        res = [x for x in res]
+        # for row in res:
+        #     logger.info(f"{row=}")
+        return ANOVA(data=list(res))
 
 
 

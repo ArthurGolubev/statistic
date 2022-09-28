@@ -1,34 +1,40 @@
-import { useLazyQuery } from '@apollo/client'
+import { useReactiveVar } from '@apollo/client'
 import * as React from 'react'
-import { GeneralTable } from './GeneralTable'
-import { UPLOAD_DATA } from './query'
+import { DataUploader } from './practicalPart/DataUploader'
+import { Description } from './practicalPart/Description'
+import { GeneralTable } from './practicalPart/GeneralTable'
+import { data1 } from './rv'
+import { Paragraph1 } from './teoreticalPart/Paragraph1'
+import { Paragraph2 } from './teoreticalPart/Paragraph2'
+import { Table1 } from './teoreticalPart/Table1'
 
 export const ANOVA = () => {
-
-    const [upload, {data, loading}] = useLazyQuery(UPLOAD_DATA)
-
-    const read = () => {
-        let inputFile = (document.querySelector("#formFile") as HTMLInputElement).files[0]
-        let reader = new FileReader()
-        reader.addEventListener('load', e =>{
-            console.log(e.target.result)
-            console.log(JSON.stringify( e.target.result))
-            upload({variables: {data: e.target.result}, fetchPolicy: "network-only"})
+    const dataSub = useReactiveVar(data1)
+    
+    return <div className='row justify-content-center'>
+        <div className='col-md-6'>
+            
+            <h5 className='text-center mb-4'>Вычисления однофакторного дисперсионного анализа</h5>
+        
+            {/* -------------------------------------------practical-part-Start------------------------------------------ */}
+            <h6>Практическая часть</h6>
+            <DataUploader />
+            {
+                dataSub?.data.length > 0 && <div>
+                    <Description />
+                    <GeneralTable />
+                </div>
             }
-        )
-        reader.readAsText(inputFile)
-    }
-    return <div>
-        <h5 className='text-center mb-4'>Вычисления однофакторного дисперсионного анализа</h5>
-        <div className="mb-3">
-            <label htmlFor="formFile" className="form-label">Файл CSV</label>
-            <input className="form-control" type="file" id="formFile" />
-        </div>
-        <button 
-        onClick={()=>read()}
-        className='btn btn-sm btn-success' type='button'>Upload</button>
-        <div>
-            {data && !loading && <GeneralTable data={data.uploadData} />}
+            {/* -------------------------------------------practical-part-End-------------------------------------------- */}
+
+            {/* -------------------------------------------teoretic-part-Start------------------------------------------ */}
+            <h6>Теоретическая часть</h6>
+            <Paragraph1 />
+            <Table1 />
+            <Paragraph2 />
+            {/* -------------------------------------------teoretic-part-End-------------------------------------------- */}
+            
+
         </div>
     </div>
 }

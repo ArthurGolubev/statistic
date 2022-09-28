@@ -31,7 +31,7 @@ class ComparisonCDF:
 
 @strawberry.type
 class ANOVA:
-    data: list[list[int]]
+    data: list[list[str]]
 
 @strawberry.type
 class Query:
@@ -57,7 +57,6 @@ class Query:
     def upload_data(data: str) -> ANOVA:
         logger.info(f"{data=}")
         res = csv.reader(data.strip().split('\n'), delimiter=',', quoting=csv.QUOTE_NONNUMERIC, skipinitialspace=True)
-        res = [x for x in res]
         # for row in res:
         #     logger.info(f"{row=}")
         return ANOVA(data=list(res))

@@ -9,7 +9,7 @@ from calculations.distributions.compare_cdf import compare_cdf
 from calculations.distributions.uniform import uniform
 from calculations.distributions.normal import normal
 from calculations.distributions.exponential import exponential
-
+from calculations.ANOVA.SingleANOVA import SinglANOVA
 
 app = FastAPI()
 
@@ -32,6 +32,14 @@ class ComparisonCDF:
 @strawberry.type
 class ANOVA:
     data: list[list[str]]
+    data_minus_avr: list[list[str]]
+    square_data: list[list[str]]
+    group_averages: list[float]
+    overall_average: float
+    Qj: list[str]
+    Tj: list[str]
+    Tj2: list[str]
+
 
 @strawberry.type
 class Query:
@@ -55,11 +63,7 @@ class Query:
     
     @strawberry.field
     def upload_data(data: str) -> ANOVA:
-        logger.info(f"{data=}")
-        res = csv.reader(data.strip().split('\n'), delimiter=',', quoting=csv.QUOTE_NONNUMERIC, skipinitialspace=True)
-        # for row in res:
-        #     logger.info(f"{row=}")
-        return ANOVA(data=list(res))
+        return ANOVA(*SinglANOVA(data=data).calculate())
 
 
 

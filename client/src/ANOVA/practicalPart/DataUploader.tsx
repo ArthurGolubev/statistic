@@ -6,6 +6,7 @@ import { data1 } from '../rv'
 
 export const DataUploader = () => {
     const [upload] = useLazyQuery(UPLOAD_DATA, {onCompleted: data => data1({...data.uploadData})})
+    const [state, setState] = React.useState({file: false})
 
     const read = () => {
         let inputFile = (document.querySelector("#formFile") as HTMLInputElement).files[0]
@@ -20,8 +21,16 @@ export const DataUploader = () => {
     }
 
     return <div className="mb-3">
-            <label htmlFor="formFile" className="form-label">Файл CSV</label>
-            <input className="form-control" type="file" id="formFile" />
-            <button onClick={()=>read()} className='btn btn-sm btn-success mt-2' type='button'>Upload</button>
+        <div className='row justify-content-center'>
+            <div className='col-10'>
+                <label htmlFor="formFile" className="form-label">Файл CSV</label>
+                <input className="form-control" type="file" accept='.csv' id="formFile" onChange={()=>setState({file: true})}/>
+            </div>
         </div>
+        <div className='row justify-content-center'>
+            <div className='col-auto'>
+                <button disabled={!state.file} onClick={()=>read()} className='btn btn-sm btn-success mt-2' type='button'>Открыть CSV</button>
+            </div>
+        </div>
+    </div>
 }

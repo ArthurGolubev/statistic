@@ -1,15 +1,15 @@
 import { useReactiveVar } from '@apollo/client'
 import * as React from 'react'
-import { data1 } from '../rv'
+import { openCSV } from '../rv'
 
 
 export const Description = () => {
 
-    const dataSub = useReactiveVar(data1)
+    const openCSVSub = useReactiveVar(openCSV)
 
     return <div>
         <p>
-            {dataSub.data[0][0]}
+            {openCSVSub.description} (табл. 2)
         </p>
     </div>
 }

@@ -1,12 +1,21 @@
 import { gql } from "@apollo/client";
+    export const OPEN_CSV = gql`
+        query openCSV_query($data: String!){
+            openCsv(data: $data){
+                description
+                header
+                factors
+                data
+                groupAverages
+            }
+        }
+    `
 
-export const UPLOAD_DATA = gql`
-    query upload_data_query($data: String!){
-        uploadData(data: $data){
-            data
-            dataMinusAvr
-            squareData
-            groupAverages
+export const CALCULATE_ANOVA = gql`
+    query calculateANOVA_query($data: String, $precision: Int, $averages: [number]){
+        calculateAnova(data: $data, precision: $precision, averages: $averages){
+            yHeaders
+            dataMinusAvrAndSquare
             overallAverage
             Qj
             Tj

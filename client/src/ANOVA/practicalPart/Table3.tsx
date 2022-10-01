@@ -7,7 +7,7 @@ export const Table3 = () => {
     
     const openCSVSub = useReactiveVar(openCSV)
     const calculatedANOVASub = useReactiveVar(calculatedANOVA)
-    
+    console.log("123 ->", calculatedANOVASub)
     
     return <div className='mt-3 mb-4'>
         

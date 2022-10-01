@@ -12,7 +12,7 @@ import { gql } from "@apollo/client";
     `
 
 export const CALCULATE_ANOVA = gql`
-    query calculateANOVA_query($data: String, $precision: Int, $averages: [number]){
+    query calculateANOVA_query($data: String!, $precision: Int!, $averages: [Float!]!){
         calculateAnova(data: $data, precision: $precision, averages: $averages){
             yHeaders
             dataMinusAvrAndSquare

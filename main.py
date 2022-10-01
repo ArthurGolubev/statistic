@@ -74,7 +74,7 @@ class Query:
         return OpenCSV(*SinglANOVA(data=data).open_csv())
 
     @strawberry.field
-    def calculate_anova(data: str, precision: int, averages: list[str]) -> ANOVA:
+    def calculate_anova(data: str, precision: int, averages: list[float]) -> ANOVA:
         logger.info("CALCULATE ANOVA")
         return ANOVA(*SinglANOVA(data=data, precision=precision).calculate(averages))
 

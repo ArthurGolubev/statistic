@@ -34,13 +34,13 @@ export const ANOVA = () => {
             <h5 className="mt-5">Практическая часть</h5>
             <DataUploader />
             {
-                openCSVSub?.data.length > 0 && <div>
+                openCSVSub.data?.length > 0 && <div>
                     <Description />
                     <Table2 />
                 </div>
             }
             {
-                calculatedANOVASub?.dataMinusAvrAndSquare.length > 0 && <div>
+                calculatedANOVASub.dataMinusAvrAndSquare?.length > 0 && <div>
                     <Step1 />
                     <Table3 />
                 </div>

@@ -7,7 +7,7 @@ import { calculatedANOVA, openCSV } from '../rv'
 export const Step2 = () => {
     const calculatedANOVASub = useReactiveVar(calculatedANOVA)
     const openCSVSub = useReactiveVar(openCSV)
-    const alpha = (document.querySelector("#alpha") as HTMLInputElement).value
+    const alpha = (document.querySelector("#alpha") as HTMLInputElement).value ? (document.querySelector("#alpha") as HTMLInputElement).value : '0.05'
 
     return <div>
         {

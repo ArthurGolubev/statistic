@@ -12,6 +12,7 @@ import { Paragraph3 } from './teoreticalPart/Paragraph3'
 import { Table1 } from './teoreticalPart/Table1'
 import { Step2 } from './practicalPart/Step2'
 import { global } from '../cache'
+import { Introduction } from './teoreticalPart/Introduction'
 
 export const ANOVA = () => {
     const openCSVSub = useReactiveVar(openCSV)
@@ -25,6 +26,8 @@ export const ANOVA = () => {
         
 
             {/* -------------------------------------------teoretic-part-Start------------------------------------------ */}
+            <h5 className='mt-5'>Введение</h5>
+            <Introduction />
             <h5 className="mt-5">Теоретическая часть</h5>
             <Paragraph1 />
             <Table1 />

@@ -27,14 +27,14 @@ export const Paragraph3 = () => {
             <MathJax>{"\\(\\ S_{\\text{факт}} = \
                 \\frac{T^2_1}{q_1} + \
                 \\frac{T^2_1}{q_1} + \
-                ... + \
+                \\ ...\\ + \
                 \\frac{T^2_p}{q_p} - \
                 \\frac{\\sum_{i = 1}^p T^2_i }{n} \
                 \\) "}</MathJax>
         </p>
         <p>
             где 
-            <MathJax inline={true}>{"\\(\\ n = q_1 + q_2 + ... + q_p \\) "}</MathJax>
+            <MathJax inline={true}>{"\\(\\ n = q_1 + q_2 +\\ ...\\ + q_p \\) "}</MathJax>
             - общее число испытаний.
             Остальные вычисления производят, как и в случае одинакового числа испытаний:
         </p>

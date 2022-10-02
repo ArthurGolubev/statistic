@@ -10,10 +10,13 @@ import { Paragraph1 } from './teoreticalPart/Paragraph1'
 import { Paragraph2 } from './teoreticalPart/Paragraph2'
 import { Paragraph3 } from './teoreticalPart/Paragraph3'
 import { Table1 } from './teoreticalPart/Table1'
+import { Step2 } from './practicalPart/Step2'
+import { global } from '../cache'
 
 export const ANOVA = () => {
     const openCSVSub = useReactiveVar(openCSV)
     const calculatedANOVASub = useReactiveVar(calculatedANOVA)
+    const globalSub = useReactiveVar(global)
     
     return <div className='row justify-content-center'>
         <div className='col-md-6'>
@@ -22,17 +25,17 @@ export const ANOVA = () => {
         
 
             {/* -------------------------------------------teoretic-part-Start------------------------------------------ */}
-            {/* <h5 className="mt-5">Теоретическая часть</h5>
+            <h5 className="mt-5">Теоретическая часть</h5>
             <Paragraph1 />
             <Table1 />
             <Paragraph2 />
-            <Paragraph3 /> */}
+            <Paragraph3 />
             {/* -------------------------------------------teoretic-part-End-------------------------------------------- */}
             
 
             {/* -------------------------------------------practical-part-Start------------------------------------------ */}
-            <h5 className="mt-5">Практическая часть</h5>
-            <DataUploader />
+            <h5 className="mt-5 mb-5">Практическая часть</h5>
+            {!globalSub.print && <DataUploader />}
             {
                 openCSVSub.data?.length > 0 && <div>
                     <Description />
@@ -40,9 +43,10 @@ export const ANOVA = () => {
                 </div>
             }
             {
-                calculatedANOVASub.dataMinusAvrAndSquare?.length > 0 && <div>
+                calculatedANOVASub.dataMinusAvr?.length > 0 && <div>
                     <Step1 />
                     <Table3 />
+                    <Step2 />
                 </div>
             }
             {/* -------------------------------------------practical-part-End-------------------------------------------- */}

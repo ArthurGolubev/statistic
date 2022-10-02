@@ -32,11 +32,28 @@ class ComparisonCDF:
 @strawberry.type
 class ANOVA:
     y_headers: list[str]
-    data_minus_avr_and_square: list[list[str]]
+    to_integer: bool
+    y_11: float
+    y_21: float
+    data_minus_avr: list[list[str]]
     overall_average: float
     Qj: list[str]
     Tj: list[str]
     Tj2: list[str]
+    sum_Qj: float
+    sum_Tj: float
+    sum_Tj2: float
+    equivalence_levels_F: bool
+    s_total: float
+    n: int
+    s_fact: float
+    column_n: list[int]
+    s_remainder: float
+    s2_fact: float
+    s2_remainder: float
+    f_observation: float
+    f_crit: float
+    h0: int
 
 
 @strawberry.type
@@ -74,9 +91,9 @@ class Query:
         return OpenCSV(*SinglANOVA(data=data).open_csv())
 
     @strawberry.field
-    def calculate_anova(data: str, precision: int, averages: list[float]) -> ANOVA:
+    def calculate_anova(data: str, precision: int, alpha: float, averages: list[float]) -> ANOVA:
         logger.info("CALCULATE ANOVA")
-        return ANOVA(*SinglANOVA(data=data, precision=precision).calculate(averages))
+        return ANOVA(*SinglANOVA(data=data, precision=precision, alpha=alpha).calculate(averages))
 
 
 

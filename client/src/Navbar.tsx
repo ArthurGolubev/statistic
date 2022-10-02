@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { Link } from 'react-router-dom'
+import { global } from './cache'
 
 export const Navbar = () => {
     return <nav className='navbar navbar-expand-sm bg-light'>
@@ -21,6 +22,6 @@ export const Navbar = () => {
                 </li>
             </ul>
         </div>
-        Nothnig
+        <button onClick={()=>global({...global(), print: true, font: "Times New Roman" })} className='btn btn-sm btn-light' type='button'>Печать</button>
     </nav>
 }

@@ -9,7 +9,7 @@ export const Table3 = () => {
     const calculatedANOVASub = useReactiveVar(calculatedANOVA)
     console.log("123 ->", calculatedANOVASub)
     
-    return <div className='mt-3 mb-4'>
+    return <div className='mt-3 mb-4' style={{pageBreakBefore: 'always'}}>
         
         <div className='row justify-content-center'>
             <div className='col'>
@@ -18,7 +18,7 @@ export const Table3 = () => {
                         <thead>
                             <tr>
                                 <th className="text-center align-middle" scope="col" rowSpan={3}>Номер<br/>наблюдений</th>
-                                <th className="text-center" scope="col" colSpan={openCSVSub.factors.length * 2}>{openCSVSub.header}</th>
+                                <th className="text-center" scope="col" colSpan={openCSVSub.factors.length * 2}>{openCSVSub.header1}</th>
                                 <th className="text-center align-middle" scope="col" rowSpan={3}>Итоговый<br/>столбец</th>
                             </tr>
                             <tr>

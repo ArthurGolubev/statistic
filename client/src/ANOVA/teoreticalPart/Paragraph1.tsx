@@ -4,7 +4,9 @@ import { MathJax } from 'better-react-mathjax'
 
 export const Paragraph1 = () => {
 
-    return <div className='mt-3'>
+    return <div className='mt-3' style={{pageBreakBefore: 'always'}}>
+        <h5 className="mt-5">Теоретическая часть</h5>
+
         <p>
             Пусть на количественный нормально распределённый признак 
             <MathJax inline={true}>{"\\(\\ X \\) "}</MathJax>

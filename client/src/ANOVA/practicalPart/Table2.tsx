@@ -14,7 +14,7 @@ export const Table2 = () => {
                     <thead>
                         <tr>
                             <th className="text-center align-middle" scope="col" rowSpan={2}>Номер<br/>наблюдений</th>
-                            <th className="text-center" scope="col" colSpan={openCSVSub.factors.length}>{openCSVSub.header}</th>
+                            <th className="text-center" scope="col" colSpan={openCSVSub.factors.length}>{openCSVSub.header1}</th>
                         </tr>
                         <tr>
                             { openCSVSub.factors.map((F: string, iter: number) =>

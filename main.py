@@ -59,10 +59,16 @@ class ANOVA:
 @strawberry.type
 class OpenCSV:
     description: str
-    header: str
+    header1: str
+    header2: str
     factors: list[str]
     data: list[list[str]]
     group_averages: list[float]
+    error_max: list[float]
+    error_min: list[float]
+    dots_x: list[str]
+    dots_y: list[float]
+
 
 
 @strawberry.type
@@ -94,6 +100,7 @@ class Query:
     def calculate_anova(data: str, precision: int, alpha: float, averages: list[float]) -> ANOVA:
         logger.info("CALCULATE ANOVA")
         return ANOVA(*SinglANOVA(data=data, precision=precision, alpha=alpha).calculate(averages))
+
 
 
 

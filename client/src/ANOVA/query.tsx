@@ -3,10 +3,15 @@ import { gql } from "@apollo/client";
         query openCSV_query($data: String!){
             openCsv(data: $data){
                 description
-                header
+                header1
+                header2
                 factors
                 data
                 groupAverages
+                errorMax
+                errorMin
+                dotsX
+                dotsY
             }
         }
     `

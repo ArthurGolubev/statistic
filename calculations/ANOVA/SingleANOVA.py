@@ -10,7 +10,8 @@ class SinglANOVA:
         input_csv = list(csv.reader(data.strip().split('\n'), delimiter=',', quoting=csv.QUOTE_NONNUMERIC, skipinitialspace=True))
 
         self.description = input_csv[0][0]
-        self.header = input_csv[0][1]
+        self.header1 = input_csv[0][1]
+        self.header2 = input_csv[0][2]
         self.factors = input_csv[1]
         self.data = input_csv[2:]
         self.alpha = alpha
@@ -233,19 +234,44 @@ class SinglANOVA:
             logger.success(f"{dfd=}")
             return self._round(stats.f.ppf(q=1-self.alpha, dfn=dfn, dfd=dfd))
 
+    def _plot_1(self, group_averages: list[float]):
+        data = self.data
+
+        error_max = []
+        error_min = []
+        dots_x = []
+        dots_y = []
+        for i in range(len(data[0])):
+            col = []
+            for j in range(len(data)):
+                if data[j][i] != '':
+                    dots_x.append(self.factors[i])
+                    dots_y.append(data[j][i])
+                    col.append(data[j][i])
+            
+            error_max.append(max(col) - group_averages[i])
+            error_min.append(group_averages[i] - min(col))
+
+        return error_max, error_min, dots_x, dots_y
 
 
 
     def open_csv(self):
         logger.success('WER')
         group_averages = self._group_averages(self.data)
+        error_max, error_min, dots_x, dots_y = self._plot_1(group_averages)
 
         return OpenCSV(
             description=self.description,
-            header=self.header,
+            header1=self.header1,
+            header2=self.header2,
             factors=self.factors,
             data=self.data,
             group_averages=group_averages,
+            error_max=error_max,
+            error_min=error_min,
+            dots_x=dots_x,
+            dots_y=dots_y
         )
 
 
@@ -262,7 +288,7 @@ class SinglANOVA:
         sum_Qj=self._round(sum(Qj))
         sum_Tj=self._round(sum(Tj))
         sum_Tj2=self._round(sum(Tj2))
-        
+
         s_total = self._s_total(sum_Qj, sum_Tj)
         equivalence_levels_F, s_fact, column_n = self._s_fact(sum_Tj, Tj2)
         s_remainder = self._round(s_total - s_fact)

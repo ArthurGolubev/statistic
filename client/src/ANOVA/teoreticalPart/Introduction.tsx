@@ -1,7 +1,9 @@
 import * as React from 'react'
 
 export const Introduction = () => {
-    return <div>
+    return <div style={{pageBreakAfter: 'always'}}>
+        <h5 className='mt-5'>Введение</h5>
+
         <p>
             Дисперсионный анализ, предложенный Р. Фишером, 
             является статистическим методом, предназначенным для выявления ряда отдельных факторов на результаты экспериментов.

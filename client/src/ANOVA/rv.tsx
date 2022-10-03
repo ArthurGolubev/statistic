@@ -2,10 +2,15 @@ import { makeVar } from "@apollo/client";
 
 export const openCSV = makeVar({
     description: '' as string,
-    header: '' as string,
+    header1: '' as string,
+    header2: '' as string,
     factors: [] as Array<string>,
     data: [] as Array<Array<number>>,
     groupAverages: [] as Array<number>,
+    errorMax: [],
+    errorMin: [],
+    dotsX: [],
+    dotsY: []
 })
 
 export const calculatedANOVA = makeVar({
@@ -32,6 +37,7 @@ export const calculatedANOVA = makeVar({
     s2Remainder: 0,
     fObservation: 0,
     fCrit: 0,
-    h0: false as boolean
+    h0: false as boolean,
+    
 })
 

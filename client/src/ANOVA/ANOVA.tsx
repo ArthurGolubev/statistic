@@ -13,6 +13,9 @@ import { Table1 } from './teoreticalPart/Table1'
 import { Step2 } from './practicalPart/Step2'
 import { global } from '../cache'
 import { Introduction } from './teoreticalPart/Introduction'
+import { Conclusion } from './practicalPart/Conclusion'
+import { BibliographicList } from './practicalPart/BibliographicList'
+import { Plot1 } from './practicalPart/Plot1'
 
 export const ANOVA = () => {
     const openCSVSub = useReactiveVar(openCSV)
@@ -21,23 +24,20 @@ export const ANOVA = () => {
     
     return <div className='row justify-content-center'>
         <div className='col-md-6'>
-            
-            <h5 className='text-center mb-4'>Вычисления однофакторного дисперсионного анализа</h5>
-        
+            <h5 className='mb-4'>Вычисления однофакторного дисперсионного анализа</h5>
+
 
             {/* -------------------------------------------teoretic-part-Start------------------------------------------ */}
-            <h5 className='mt-5'>Введение</h5>
-            <Introduction />
-            <h5 className="mt-5">Теоретическая часть</h5>
+            {/* <Introduction />
             <Paragraph1 />
             <Table1 />
             <Paragraph2 />
-            <Paragraph3 />
+            <Paragraph3 /> */}
             {/* -------------------------------------------teoretic-part-End-------------------------------------------- */}
-            
+
 
             {/* -------------------------------------------practical-part-Start------------------------------------------ */}
-            <h5 className="mt-5 mb-5">Практическая часть</h5>
+            <h5 className="mt-5 mb-5" style={{pageBreakBefore: 'always'}}>Практическая часть</h5>
             {!globalSub.print && <DataUploader />}
             {
                 openCSVSub.data?.length > 0 && <div>
@@ -50,6 +50,9 @@ export const ANOVA = () => {
                     <Step1 />
                     <Table3 />
                     <Step2 />
+                    <Plot1 />
+                    <Conclusion />
+                    <BibliographicList />
                 </div>
             }
             {/* -------------------------------------------practical-part-End-------------------------------------------- */}

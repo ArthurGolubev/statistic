@@ -4,10 +4,16 @@ from typing import NamedTuple
 
 class OpenCSV(NamedTuple):
     description: str
-    header: str
+    header1: str
+    header2: str
     factors: list[str]
     data: list[list[str]]
     group_averages: list[float]
+    error_max: list[float]
+    error_min: list[float]
+    dots_x: list[str]
+    dots_y: list[float]
+
 
 
 class SANOVA(NamedTuple):

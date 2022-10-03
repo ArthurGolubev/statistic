@@ -4,7 +4,7 @@ import { MathJax } from 'better-react-mathjax'
 
 export const Paragraph3 = () => {
 
-    return <div className='mt-3'>
+    return <div className='mt-3' style={{pageBreakAfter: 'always'}}>
         <p>
             Если число испытаний на уровне 
             <MathJax inline={true}>{"\\(\\ F_1 \\) "}</MathJax>

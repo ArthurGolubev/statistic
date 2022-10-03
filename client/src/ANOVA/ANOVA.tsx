@@ -28,11 +28,11 @@ export const ANOVA = () => {
 
 
             {/* -------------------------------------------teoretic-part-Start------------------------------------------ */}
-            {/* <Introduction />
+            <Introduction />
             <Paragraph1 />
             <Table1 />
             <Paragraph2 />
-            <Paragraph3 /> */}
+            <Paragraph3 />
             {/* -------------------------------------------teoretic-part-End-------------------------------------------- */}
 
 

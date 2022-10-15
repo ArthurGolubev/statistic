@@ -26,18 +26,18 @@ export const Table2 = () => {
                         { openCSVSub.data.map((xi: Array<number>, i: number) => 
                             <tr key={"observation-"+ i+1}>
                                 
-                                <th scope='col' className='text-center'>{i+1}</th>
+                                <th scope='row' className='text-center'>{i+1}</th>
                                 { xi.map((xij: number, j: number) => 
                                     <td key={"xij-"+ `${i+1}` + `${j+1}`} scope="col" className='text-center'>{xij}</td>
                                 )}
                             </tr>
                         )}
                         <tr>
-                            <th scope='col' className='text-center'>
+                            <th scope='row' className='text-center'>
                                 <MathJax inline={true}>{"\\(\\ \\bar{x}_{\\text{гр}} \\)"}</MathJax>
                             </th>
                             { openCSVSub.groupAverages.map((average, iter) => 
-                                <td key={"group-average-" + iter} scope='col' className='text-center'>{average}</td>
+                                <td key={"group-average-" + iter} className='text-center'>{average}</td>
                             )}
                         </tr>
                     </tbody>

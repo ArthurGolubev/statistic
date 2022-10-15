@@ -1,6 +1,5 @@
 import { useReactiveVar } from '@apollo/client'
 import * as React from 'react'
-import { DataUploader } from './practicalPart/DataUploader'
 import { Description } from './practicalPart/Description'
 import { Table2 } from './practicalPart/Table2'
 import { Step1 } from './practicalPart/Step1'
@@ -16,6 +15,7 @@ import { Introduction } from './teoreticalPart/Introduction'
 import { Conclusion } from './practicalPart/Conclusion'
 import { BibliographicList } from './practicalPart/BibliographicList'
 import { Plot1 } from './practicalPart/Plot1'
+import { Interface } from './practicalPart/interface/Interface'
 
 export const ANOVA = () => {
     const openCSVSub = useReactiveVar(openCSV)
@@ -24,21 +24,25 @@ export const ANOVA = () => {
     
     return <div className='row justify-content-center'>
         <div className='col-md-6'>
-            <h5 className='mb-4'>Вычисления однофакторного дисперсионного анализа</h5>
+            <h5 className='mb-4 text-center'>Вычисления однофакторного дисперсионного анализа</h5>
 
 
             {/* -------------------------------------------teoretic-part-Start------------------------------------------ */}
-            <Introduction />
-            <Paragraph1 />
-            <Table1 />
-            <Paragraph2 />
-            <Paragraph3 />
+            {
+                globalSub.teoreticalpart && <div>
+                    <Introduction />
+                    <Paragraph1 />
+                    <Table1 />
+                    <Paragraph2 />
+                    <Paragraph3 />
+                </div>
+            }
             {/* -------------------------------------------teoretic-part-End-------------------------------------------- */}
 
 
             {/* -------------------------------------------practical-part-Start------------------------------------------ */}
             <h5 className="mt-5 mb-5" style={{pageBreakBefore: 'always'}}>Практическая часть</h5>
-            {!globalSub.print && <DataUploader />}
+            {!globalSub.print && <Interface />}
             {
                 openCSVSub.data?.length > 0 && <div>
                     <Description />

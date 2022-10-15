@@ -2,5 +2,7 @@ import { makeVar } from "@apollo/client";
 
 export const global = makeVar({
     print: false,
-    font: ""
+    font: "",
+    Interface: "open",
+    teoreticalpart: false
 })

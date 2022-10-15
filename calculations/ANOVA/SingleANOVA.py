@@ -192,6 +192,7 @@ class SinglANOVA:
         logger.success(f"{column_n=}")
 
         if equivalence_levels_F:
+            # TODO тут
             logger.success(f"1")
             s_fact = 10
         else:
@@ -215,8 +216,9 @@ class SinglANOVA:
 
 
     def _s2_remainder(self, equivalence_levels_F: bool, s_remainder: float):
+        # TODO тут равное кол-во факторов
         if equivalence_levels_F:
-            pass
+            s2_remainder = s_remainder / (self.n - len(self.factors))
         else:
             s2_remainder = s_remainder / (self.n - len(self.factors))
         return self._round(s2_remainder)
@@ -225,8 +227,13 @@ class SinglANOVA:
 
 
     def _f_crit(self, equivalence_levels_F: bool):
+        # TODO тут равное кол-во факторов
         if equivalence_levels_F:
-            pass
+            dfn = len(self.factors) - 1
+            dfd = self.n - len(self.factors)
+            logger.success(f"{dfn=}")
+            logger.success(f"{dfd=}")
+            return self._round(stats.f.ppf(q=1-self.alpha, dfn=dfn, dfd=dfd))
         else:
             dfn = len(self.factors) - 1
             dfd = self.n - len(self.factors)
@@ -296,6 +303,8 @@ class SinglANOVA:
         s2_remainder = self._s2_remainder(equivalence_levels_F, s_remainder)
         f_observation = self._f_observation(s2_fact, s2_remainder)
         f_crit = self._f_crit(equivalence_levels_F)
+        logger.debug(f"{f_crit=}")
+        logger.debug(f"{f_observation=}")
         h0 = f_crit > f_observation
 
         logger.success(f"{h0=}")

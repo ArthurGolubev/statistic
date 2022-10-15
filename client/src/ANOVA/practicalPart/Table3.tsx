@@ -42,9 +42,9 @@ export const Table3 = () => {
                             { calculatedANOVASub.dataMinusAvr.map((xi: Array<number>, i: number) => 
                                 <tr key={"observation-"+ i+1}>
                                     
-                                    <th scope='col' className='text-center'>{i+1}</th>
+                                    <th scope='row' className='text-center'>{i+1}</th>
                                     { xi.map((xij: number, j: number) => 
-                                        <td key={"xij-"+ `${i+1}` + `${j+1}`} scope="col" className='text-center'>{xij}</td>
+                                        <td key={"xij-"+ `${i+1}` + `${j+1}`} className='text-center'>{xij}</td>
                                     )}
                                 </tr>
                             )}
@@ -52,37 +52,37 @@ export const Table3 = () => {
 
                             {/* -------------------------------------------Footer-Start------------------------------------------ */}
                             <tr>
-                                <th scope='col' className='text-center'>
+                                <th scope='row' className='text-center'>
                                     <MathJax inline={true}>{"\\(\\ Q_j = \\sum y^2_{ij} \\)"}</MathJax>
                                 </th>
                                 { calculatedANOVASub.Qj.map((Qj: number, iter: number) => 
                                         <td key={"Qj-" + iter } scope="col" className='text-center'>{Qj}</td>
                                 )}
-                                <td scope='col' className='text-center'>
+                                <td className='text-center'>
                                     <MathJax inline={true}>{`\\( \\sum Q_{j}= ${calculatedANOVASub.sumQj}\\)`}</MathJax>
                                 </td>
                             </tr>
 
                             <tr>
-                                <th scope='col' className='text-center'>
+                                <th scope='row' className='text-center'>
                                     <MathJax inline={true}>{"\\(\\ T_j = \\sum y_{ij} \\)"}</MathJax>
                                 </th>
                                 { calculatedANOVASub.Tj.map((Tj: number, iter: number) => 
-                                        <td key={"Tj-" + iter } scope="col" className='text-center'>{Tj}</td>
+                                        <td key={"Tj-" + iter } className='text-center'>{Tj}</td>
                                 )}
-                                <td scope='col' className='text-center'>
+                                <td  className='text-center'>
                                     <MathJax inline={true}>{`\\( \\sum T_{j}= ${calculatedANOVASub.sumTj}\\)`}</MathJax>
                                 </td>
                             </tr>
 
                             <tr>
-                                <th scope='col' className='text-center'>
+                                <th scope='row' className='text-center'>
                                     <MathJax inline={true}>{"\\(\\ T^2_j \\)"}</MathJax>
                                 </th>
                                 { calculatedANOVASub.Tj2.map((Tj2: number, iter: number) => 
-                                        <td key={"Tj2-" + iter } scope="col" className='text-center'>{Tj2}</td>
+                                        <td key={"Tj2-" + iter } className='text-center'>{Tj2}</td>
                                 )}
-                                <td scope='col' className='text-center'>
+                                <td className='text-center'>
                                     <MathJax inline={true}>{`\\( \\sum T^2_{j}= ${calculatedANOVASub.sumTj2}\\)`}</MathJax>
                                 </td>
                             </tr>

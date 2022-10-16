@@ -176,7 +176,7 @@ class SinglANOVA:
 
 
     
-    def _s_fact(self, sum_Tj: float, Tj2: float):
+    def _s_fact(self, sum_Tj: float, sum_TJ2: float, Tj2: float):
         rows = len(self.data)
         cols = len(self.data[0])
         column_n = []
@@ -188,13 +188,12 @@ class SinglANOVA:
                     n += 1
             column_n.append(n)
         sorted_c = sorted(column_n)
-        equivalence_levels_F = sorted_c[-1] == sorted_c[1]
+        equivalence_levels_F = all([x == sorted_c[0] for x in sorted_c])
         logger.success(f"{column_n=}")
 
         if equivalence_levels_F:
-            # TODO тут
             logger.success(f"1")
-            s_fact = 10
+            s_fact = sum_TJ2 / rows
         else:
             logger.success(f"2")
             s = []
@@ -215,31 +214,19 @@ class SinglANOVA:
 
 
 
-    def _s2_remainder(self, equivalence_levels_F: bool, s_remainder: float):
-        # TODO тут равное кол-во факторов
-        if equivalence_levels_F:
-            s2_remainder = s_remainder / (self.n - len(self.factors))
-        else:
-            s2_remainder = s_remainder / (self.n - len(self.factors))
+    def _s2_remainder(self, s_remainder: float):
+        s2_remainder = s_remainder / (self.n - len(self.factors))
         return self._round(s2_remainder)
 
 
 
 
-    def _f_crit(self, equivalence_levels_F: bool):
-        # TODO тут равное кол-во факторов
-        if equivalence_levels_F:
-            dfn = len(self.factors) - 1
-            dfd = self.n - len(self.factors)
-            logger.success(f"{dfn=}")
-            logger.success(f"{dfd=}")
-            return self._round(stats.f.ppf(q=1-self.alpha, dfn=dfn, dfd=dfd))
-        else:
-            dfn = len(self.factors) - 1
-            dfd = self.n - len(self.factors)
-            logger.success(f"{dfn=}")
-            logger.success(f"{dfd=}")
-            return self._round(stats.f.ppf(q=1-self.alpha, dfn=dfn, dfd=dfd))
+    def _f_crit(self):
+        dfn = len(self.factors) - 1
+        dfd = self.n - len(self.factors)
+        logger.success(f"{dfn=}")
+        logger.success(f"{dfd=}")
+        return self._round(stats.f.ppf(q=1-self.alpha, dfn=dfn, dfd=dfd))
 
     def _plot_1(self, group_averages: list[float]):
         data = self.data
@@ -297,7 +284,7 @@ class SinglANOVA:
         sum_Tj2=self._round(sum(Tj2))
 
         s_total = self._s_total(sum_Qj, sum_Tj)
-        equivalence_levels_F, s_fact, column_n = self._s_fact(sum_Tj, Tj2)
+        equivalence_levels_F, s_fact, column_n = self._s_fact(sum_Tj, sum_Tj2, Tj2)
         s_remainder = self._round(s_total - s_fact)
         s2_fact = self._round(s_fact / (len(self.factors) - 1))
         s2_remainder = self._s2_remainder(equivalence_levels_F, s_remainder)

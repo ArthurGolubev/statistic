@@ -27,6 +27,14 @@ export const Step2 = () => {
                             ${calculatedANOVASub.sTotal} \
                             \\)`}</MathJax>
                     </p>
+                    <p className='text-center'>
+                        <MathJax>{`\\(\\ S_{\\text{факт}} = \
+                            \\frac{\\sum_{i = 1}^p T^2_j}{q} - \\frac{[\\sum_{i = 1}^p T_j]^2}{pq} = \
+                            \\frac{${calculatedANOVASub.sumTj2}}{${calculatedANOVASub.dataMinusAvr.length}} - \
+                            \\frac{${calculatedANOVASub.sumTj}^2}{${calculatedANOVASub.dataMinusAvr.length}*${calculatedANOVASub.dataMinusAvr.length}} = \
+                            ${calculatedANOVASub.sFact} \
+                            \\)`}</MathJax>
+                    </p>
                 </div>
             ) : (
                 <div>

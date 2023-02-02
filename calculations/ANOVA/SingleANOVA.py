@@ -287,9 +287,9 @@ class SinglANOVA:
         equivalence_levels_F, s_fact, column_n = self._s_fact(sum_Tj, sum_Tj2, Tj2)
         s_remainder = self._round(s_total - s_fact)
         s2_fact = self._round(s_fact / (len(self.factors) - 1))
-        s2_remainder = self._s2_remainder(equivalence_levels_F, s_remainder)
+        s2_remainder = self._s2_remainder(s_remainder)
         f_observation = self._f_observation(s2_fact, s2_remainder)
-        f_crit = self._f_crit(equivalence_levels_F)
+        f_crit = self._f_crit()
         logger.debug(f"{f_crit=}")
         logger.debug(f"{f_observation=}")
         h0 = f_crit > f_observation

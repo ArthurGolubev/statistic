@@ -11,6 +11,12 @@ object-assign
 */
 
 /*!
+  * Bootstrap v5.2.0 (https://getbootstrap.com/)
+  * Copyright 2011-2022 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
+  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
+  */
+
+/*!
  * Determine if an object is a Buffer
  *
  * @author   Feross Aboukhadijeh <https://feross.org>
@@ -78,6 +84,17 @@ object-assign
  *
  * This source code is licensed under the MIT license found in the
  * LICENSE file in the root directory of this source tree.
+ */
+
+/**
+ * React Router DOM v6.3.0
+ *
+ * Copyright (c) Remix Software Inc.
+ *
+ * This source code is licensed under the MIT license found in the
+ * LICENSE.md file in the root directory of this source tree.
+ *
+ * @license MIT
  */
 
 /**

@@ -6,7 +6,7 @@ from calculations.ANOVA.types import SANOVA, OpenCSV
 
 
 class SinglANOVA:
-    def __init__(self, data: str, precision: int=5, alpha: float=0.05):
+    def __init__(self, data: str):
         input_csv = list(csv.reader(data.strip().split('\n'), delimiter=',', quoting=csv.QUOTE_NONNUMERIC, skipinitialspace=True))
 
         self.description = input_csv[0][0]
@@ -14,8 +14,7 @@ class SinglANOVA:
         self.header2 = input_csv[0][2]
         self.factors = input_csv[1]
         self.data = input_csv[2:]
-        self.alpha = alpha
-        self.precision = precision
+        
         self.to_integer = False
 
 
@@ -271,8 +270,14 @@ class SinglANOVA:
 
 
 
-    def calculate(self, averages: list[str]) -> SANOVA:
+    def calculate(self,
+                    averages: list[str], # Вспомнить, зачем оно тут
+                    precision: int=5,
+                    alpha: float=0.05) -> SANOVA:
         self._to_integer()
+        self.alpha = alpha
+        self.precision = precision
+
         overall_average = self._overall_averages(self._group_averages(self.data))
         data_minus_averages = self._data_minus_averages(self.data, overall_average)
         # data_minus_averages = self._data_minus_averages(self.data, 138)

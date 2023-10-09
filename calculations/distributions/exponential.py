@@ -2,8 +2,7 @@ import random
 from loguru import logger
 from scipy.stats import expon
 from math import sqrt
-from ..types import Statistic
-
+from models import Statistic
 
 def exponential(n: int=10000) -> Statistic:
     """ Показательный закон распределения """
@@ -49,4 +48,11 @@ def exponential(n: int=10000) -> Statistic:
 
     # cdf, array = custom_exponential()
     
-    return Statistic(array=sorted(array), variance=v, mean=m, standard_deviation=std, cdf=sorted(cdf))
+    return Statistic(
+        array=sorted(array),
+        variance=v,
+        mean=m,
+        standard_deviation=std,
+        cdf=sorted(cdf),
+        title='Показательно распределение'
+        )

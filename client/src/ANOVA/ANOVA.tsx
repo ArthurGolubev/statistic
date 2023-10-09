@@ -1,64 +1,27 @@
-import { useReactiveVar } from '@apollo/client'
 import * as React from 'react'
-import { Description } from './practicalPart/Description'
-import { Table2 } from './practicalPart/Table2'
-import { Step1 } from './practicalPart/Step1'
-import { Table3 } from './practicalPart/Table3'
-import { calculatedANOVA, openCSV } from './rv'
-import { Paragraph1 } from './teoreticalPart/Paragraph1'
-import { Paragraph2 } from './teoreticalPart/Paragraph2'
-import { Paragraph3 } from './teoreticalPart/Paragraph3'
-import { Table1 } from './teoreticalPart/Table1'
-import { Step2 } from './practicalPart/Step2'
-import { global } from '../cache'
-import { Introduction } from './teoreticalPart/Introduction'
-import { Conclusion } from './practicalPart/Conclusion'
-import { BibliographicList } from './practicalPart/BibliographicList'
-import { Plot1 } from './practicalPart/Plot1'
-import { Interface } from './practicalPart/interface/Interface'
+import { TheoreticalPath } from './teoreticalPart/TheoreticalPath'
+import { PracticalPart } from './practicalPart/calculateData/PracticalPart'
+import { useInterface } from '../interfaceStore'
+import { Interface } from './practicalPart/calculateData/Interface'
 
 export const ANOVA = () => {
-    const openCSVSub = useReactiveVar(openCSV)
-    const calculatedANOVASub = useReactiveVar(calculatedANOVA)
-    const globalSub = useReactiveVar(global)
+    const showTheoreticalPart = useInterface(state => state.showTheoreticalPart)
+    const printView = useInterface(state => state.print.view)
     
     return <div className='row justify-content-center'>
         <div className='col-md-6'>
-            <h5 className='mb-4 text-center'>Вычисления однофакторного дисперсионного анализа</h5>
+            
+            <h5 className='mb-4 text-center'>Вычисления Однофакторного Дсперсионного Анализа</h5>
 
+            {!printView && <Interface />}
 
             {/* -------------------------------------------teoretic-part-Start------------------------------------------ */}
-            {
-                globalSub.teoreticalpart && <div>
-                    <Introduction />
-                    <Paragraph1 />
-                    <Table1 />
-                    <Paragraph2 />
-                    <Paragraph3 />
-                </div>
-            }
+            { showTheoreticalPart && <TheoreticalPath />}
             {/* -------------------------------------------teoretic-part-End-------------------------------------------- */}
 
 
             {/* -------------------------------------------practical-part-Start------------------------------------------ */}
-            <h5 className="mt-5 mb-5" style={{pageBreakBefore: 'always'}}>Практическая часть</h5>
-            {!globalSub.print && <Interface />}
-            {
-                openCSVSub.data?.length > 0 && <div>
-                    <Description />
-                    <Table2 />
-                </div>
-            }
-            {
-                calculatedANOVASub.dataMinusAvr?.length > 0 && <div>
-                    <Step1 />
-                    <Table3 />
-                    <Step2 />
-                    <Plot1 />
-                    <Conclusion />
-                    <BibliographicList />
-                </div>
-            }
+            <PracticalPart />
             {/* -------------------------------------------practical-part-End-------------------------------------------- */}
 
         </div>

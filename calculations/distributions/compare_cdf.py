@@ -1,8 +1,9 @@
 from calculations.distributions.exponential import exponential
 from calculations.distributions.normal import normal
 from calculations.distributions.uniform import uniform
-from calculations.types import CompareCDF, Statistic
 from loguru import logger
+from models import Statistic
+from models import ComparisonCDF
 
 
 
@@ -20,7 +21,7 @@ def compare_cdf(n: int, m: int, n_distribution: str, m_distribution: str, a: int
     stats_2 = cdf(m_distribution, m)
 
     #  TODO Сравнить cdf_1 и cdf_2
-    return CompareCDF(
+    return ComparisonCDF(
         cdf_1=stats_1.cdf,
         cdf_2=stats_2.cdf,
         array_1=stats_1.array,

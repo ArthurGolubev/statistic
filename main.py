@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.staticfiles import StaticFiles
-from .routers import main_router
+from routers import main_router
 
 
 app = FastAPI()

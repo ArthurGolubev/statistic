@@ -1,21 +1,19 @@
 import * as React from 'react'
 import Plot from 'react-plotly.js'
-import { useLazyQuery } from '@apollo/client'
-import { GET_NORMAL_DISTRIBUTION } from './query'
+import { ax } from '../ANOVA/axiosInstance'
 
 
 export const NormalDistribution = () => {
     const [state, setState] = React.useState([{chart_id: 1, n: null, data: {x: [], y: []}}] )
 
-    const [calculate_plot, {data, loading, error}] = useLazyQuery(GET_NORMAL_DISTRIBUTION)
 
 
     const calculate = (n: HTMLInputElement, chart_id: number) => {
-        calculate_plot({variables: {n: parseInt(n.value)}, onCompleted: data => {
-            let new_chart = {chart_id, n, data: {x: data.normalDistribution.x, y: data.normalDistribution.y}}
+        ax.post('/destribution/calculate', { n: parseInt(n.value), distribution_type: 'normal' }).then(data => {
+            let new_chart = {chart_id, n, data: {x: data.data.x, y: data.data.y}}
             let chart = state.filter(chart => chart.chart_id !== chart_id).concat(new_chart)
             setState(chart.sort((a, b) => a.chart_id - b.chart_id))
-        }})
+        })
     }
 
 

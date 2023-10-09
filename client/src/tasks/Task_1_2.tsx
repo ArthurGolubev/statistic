@@ -1,42 +1,65 @@
-import { useLazyQuery } from '@apollo/client'
 import { MathJax } from 'better-react-mathjax'
 import * as React from 'react'
 import Plot from 'react-plotly.js'
-import { EVALUATE_EQUALITY_CDF } from './query'
+import { ax } from '../ANOVA/axiosInstance'
 
 export const Task_1_2 = () => {
 
-    const [evaluateEqualityCdf] = useLazyQuery(EVALUATE_EQUALITY_CDF)
 
     const [state, setState] = React.useState({
-        cdf1: [],
-        cdf2: [],
-        array1: [],
-        array2: [],
+        cdf_1: [],
+        cdf_2: [],
+        array_1: [],
+        array_2: [],
     })
 
     const calculateRvs = () => {
-        let n = parseInt((document.querySelector("#n") as HTMLInputElement).value)
-        let m = parseInt((document.querySelector("#m") as HTMLInputElement).value)
-        let nDistribution = (document.querySelector("#n-distribution") as HTMLSelectElement).value
-        let mDistribution = (document.querySelector("#m-distribution") as HTMLSelectElement).value
-        let a = parseInt((document.querySelector("#a") as HTMLInputElement).value)
-        const dist = (distType: string) => {
-            switch(distType){
-                case '1':
-                    return 'uniform'
-                case '2':
-                    return 'normal'
-                case '3':
-                    return 'exponential'
-            }
+        let isNotEmpty = true
+        let n = (document.querySelector("#n") as HTMLInputElement)
+        if(n.value === ''){
+            n.className = 'form-control is-invalid'
+            isNotEmpty = false
+        } else {
+            n.className = 'form-control is-valid'
         }
-        evaluateEqualityCdf({
-            variables: {n, m, nDistribution: dist(nDistribution), mDistribution: dist(mDistribution), a},
-            fetchPolicy: "network-only",
-            onCompleted: data => setState(data.evaluateEqualityCdf)
-        })
+        let m = (document.querySelector("#m") as HTMLInputElement)
+        if(m.value === ''){
+            m.className = 'form-control is-invalid'
+            isNotEmpty = false
+        } else {
+            m.className = 'form-control is-valid'
+        }
+        let nDistribution = (document.querySelector("#n-distribution") as HTMLSelectElement)
+        if(nDistribution.value === ''){
+            nDistribution.className = 'form-control is-invalid'
+            isNotEmpty = false
+        } else {
+            nDistribution.className = 'form-control is-valid'
+        }
+        let mDistribution = (document.querySelector("#m-distribution") as HTMLSelectElement)
+        if(mDistribution.value === ''){
+            mDistribution.className = 'form-control is-invalid'
+            isNotEmpty = false
+        } else {
+            mDistribution.className = 'form-control is-valid'
+        }
+        let a = (document.querySelector("#a") as HTMLInputElement)
+        if(a.value === '' || parseFloat(a.value) < 0){
+            a.className = 'form-control is-invalid'
+            isNotEmpty = false
+        } else {
+            a.className = 'form-control is-valid'
+        }
 
+        if(isNotEmpty){
+            ax.post('/destribution/evaluate-equality-cdf', {
+                n: parseInt(n.value),
+                m: parseInt(m.value),
+                a: parseFloat(a.value),
+                n_distribution: nDistribution.value,
+                m_distribution: mDistribution.value,
+            }).then(data => setState(data.data))
+        }
 
     }
 
@@ -110,9 +133,9 @@ export const Task_1_2 = () => {
                             <input id="n" className='form-control' type='number' placeholder='Количество наблюдений...' />
                             <span className='input-group-text'><MathJax inline={true}>{"\\(\\ p(x) \\)"}</MathJax></span>
                             <select id='n-distribution' className='form-select'>
-                                <option value="1">Равномерный</option>
-                                <option value="2">Нормальный</option>
-                                <option value="3">Показательный</option>
+                                <option value="uniform">Равномерный</option>
+                                <option value="normal">Нормальный</option>
+                                <option value="exponential">Показательный</option>
                             </select>
                         </div>
                     </li>
@@ -122,9 +145,9 @@ export const Task_1_2 = () => {
                             <input id="m" className='form-control' type='number' placeholder='Количество наблюдений...' />
                             <span className='input-group-text'><MathJax inline={true}>{"\\(\\ p(x) \\)"}</MathJax></span>
                             <select id='m-distribution' className='form-select'>
-                                <option value="1">Равномерный</option>
-                                <option value="2">Нормальный</option>
-                                <option value="3">Показательный</option>
+                                <option value="uniform">Равномерный</option>
+                                <option value="normal">Нормальный</option>
+                                <option value="exponential">Показательный</option>
                             </select>
                         </div>
                     </li>
@@ -148,17 +171,17 @@ export const Task_1_2 = () => {
         </div>
         {/* Оценка ФРВ */}
         {
-            state.cdf1 && <Plot
+            state.cdf_1 && <Plot
             data={[
                 {
-                    x: state.array1,
-                    y: state.cdf1,
+                    x: state.array_1,
+                    y: state.cdf_1,
                     type: 'scatter',
                     mode: 'lines+markers',
                 },
                 {
-                    x: state.array2,
-                    y: state.cdf2,
+                    x: state.array_2,
+                    y: state.cdf_2,
                     type: 'scatter',
                     mode: 'lines+markers',
                 }

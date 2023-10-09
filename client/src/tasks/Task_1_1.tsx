@@ -1,8 +1,7 @@
-import { useLazyQuery } from '@apollo/client'
 import { MathJax } from 'better-react-mathjax'
 import * as React from 'react'
 import Plot from 'react-plotly.js'
-import { GET_EXPONENTIAL_DISTRIBUTION, GET_NORMAL_DISTRIBUTION, GET_UNIFORM_DISTRIBUTION } from './query'
+import { ax } from '../ANOVA/axiosInstance'
 
 export const Task_1_1 = () => {
     
@@ -16,45 +15,9 @@ export const Task_1_1 = () => {
         title: "Равномерное распределение"
     })
 
-    const [uniformDistribution] = useLazyQuery(GET_UNIFORM_DISTRIBUTION)            // Равномерное
-    const [normalDistribution] = useLazyQuery(GET_NORMAL_DISTRIBUTION)              // Нормальный
-    const [exponentialDistribution] = useLazyQuery(GET_EXPONENTIAL_DISTRIBUTION)    // Показательное
     
     const calculateRvs = (n: HTMLInputElement, distributionType: HTMLSelectElement) => {
-        let distribution = distributionType.value
-        switch(distribution){
-            case "1":
-                uniformDistribution({
-                    variables: {sampleSize: parseInt(n.value)},
-                    fetchPolicy: "network-only",
-                    onCompleted: data => setState({
-                        ...data.uniformDistributionStatistic,
-                        title: "Равномерное распределение"
-                    })
-                })
-                break;
-            case "2":
-                normalDistribution({
-                    variables: {sampleSize: parseInt(n.value)},
-                    fetchPolicy: "network-only",
-                    onCompleted: data => setState({
-                        ...data.normalDistributionStatistic,
-                        title: "Нормальное распределение"
-                    })
-                })
-                break;
-            case "3":
-                exponentialDistribution({
-                    variables: {sampleSize
-                        : parseInt(n.value)},
-                    fetchPolicy: "network-only",
-                    onCompleted: data => setState({
-                        ...data.exponentialDistributionStatistic,
-                        title: "Показательно распределение"
-                    })
-                })
-                break;
-        }
+        ax.post('/destribution/calculate', {sample_size: parseInt(n.value), distribution_type: distributionType.value}).then(data => setState({...data.data}))
     }
 
     
@@ -94,9 +57,9 @@ export const Task_1_1 = () => {
                     <input id="n" className='form-control' type='number' placeholder='Количество наблюдений...' />
                     <span className='input-group-text'><MathJax inline={true}>{"\\(\\ p(u) \\)"}</MathJax></span>
                     <select id='distribution-type' className='form-select'>
-                        <option value="1">Равномерный</option>
-                        <option value="2">Нормальный</option>
-                        <option value="3">Показательный</option>
+                        <option value="uniform">Равномерный</option>
+                        <option value="normal">Нормальный</option>
+                        <option value="exponential">Показательный</option>
                     </select>
                     <button onClick={()=>calculateRvs(document.querySelector("#n"), document.querySelector("#distribution-type"))}
                     className='btn btn-sm btn-success' type='button'>Расчитать</button>

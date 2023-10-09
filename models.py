@@ -1,18 +1,7 @@
 from pydantic import BaseModel
 
 
-class InputData(BaseModel):
-    pass
-
-
-class InputParametrs(BaseModel):
-    pass
-
-
 class ProcessedInputData(BaseModel):
-    description: str
-    header1: str
-    header2: str
     factors: list[str]
     data: list[list[str]]
     group_averages: list[float]
@@ -54,6 +43,7 @@ class Statistic(BaseModel):
     standard_deviation: float       # Среднеквадратическое отклонение
     mean:               float       # Математическое ожидание
     cdf:                list[float] # ФРВ
+    title:              str
 
 
 class ComparisonCDF(BaseModel):
@@ -62,3 +52,15 @@ class ComparisonCDF(BaseModel):
     array_1:    list[float]
     array_2:    list[float]
 
+
+class InputDestribution(BaseModel):
+    sample_size: int
+    distribution_type: str
+
+
+class InputEvaluateEqualityCDF(BaseModel):
+    n: int
+    m: int
+    a: int
+    n_distribution: str
+    m_distribution: str

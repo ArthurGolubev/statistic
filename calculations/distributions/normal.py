@@ -2,8 +2,7 @@ import random
 from loguru import logger
 from scipy.stats import norm
 from math import e
-from ..types import Statistic
-
+from models import Statistic
 
 def normal(n: int=500) -> Statistic:
     """ Нормальный закон распределения """
@@ -49,4 +48,11 @@ def normal(n: int=500) -> Statistic:
 
     # cdf, array = custom_normal()
 
-    return Statistic(array=sorted(array), variance=v, mean=m, standard_deviation=std, cdf=sorted(cdf))
+    return Statistic(
+        array=sorted(array),
+        variance=v,
+        mean=m,
+        standard_deviation=std,
+        cdf=sorted(cdf),
+        title='Нормальное распределение'
+        )

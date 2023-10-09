@@ -2,19 +2,17 @@ import csv
 from loguru import logger
 from scipy import stats
 
-from calculations.ANOVA.types import SANOVA, OpenCSV
+from models import ProcessedInputData
+from models import CalculatedANOVA
 
 
 class SinglANOVA:
-    def __init__(self, data: str):
-        input_csv = list(csv.reader(data.strip().split('\n'), delimiter=',', quoting=csv.QUOTE_NONNUMERIC, skipinitialspace=True))
+    def __init__(self, data: list[list[float]], factors: list[str], precision: int = 2):
 
-        self.description = input_csv[0][0]
-        self.header1 = input_csv[0][1]
-        self.header2 = input_csv[0][2]
-        self.factors = input_csv[1]
-        self.data = input_csv[2:]
-        
+        self.factors = factors
+        self.data = data
+        self.precision = precision
+
         self.to_integer = False
 
 
@@ -32,6 +30,7 @@ class SinglANOVA:
         for i in range(rows):
             for j in range(cols):
                 if data[i][j] != '':
+                    logger.info(f'\n\n\n{str(data[i][j]).split(".")=}\n\n')
                     if str(data[i][j]).split(".")[1] != '0':
                         max_percision = max(len(str(data[i][j]).split(".")[1]), max_percision)
         self.to_integer = True if max_percision else False
@@ -249,15 +248,12 @@ class SinglANOVA:
 
 
 
-    def open_csv(self):
+    def open_csv(self) -> ProcessedInputData:
         logger.success('WER')
         group_averages = self._group_averages(self.data)
         error_max, error_min, dots_x, dots_y = self._plot_1(group_averages)
 
-        return OpenCSV(
-            description=self.description,
-            header1=self.header1,
-            header2=self.header2,
+        return ProcessedInputData(
             factors=self.factors,
             data=self.data,
             group_averages=group_averages,
@@ -273,7 +269,7 @@ class SinglANOVA:
     def calculate(self,
                     averages: list[str], # Вспомнить, зачем оно тут
                     precision: int=5,
-                    alpha: float=0.05) -> SANOVA:
+                    alpha: float=0.05) -> CalculatedANOVA:
         self._to_integer()
         self.alpha = alpha
         self.precision = precision
@@ -301,12 +297,13 @@ class SinglANOVA:
 
         logger.success(f"{h0=}")
 
-        return SANOVA(
+        return CalculatedANOVA(
             y_headers=y_headers,
             to_integer=self.to_integer,
             y_11=self.y_11,
             y_21=self.y_21,
-            data_minus_avr_and_square = data_minus_avr_and_square_table,
+            data_minus_avr = data_minus_avr_and_square_table,
+            # data_minus_avr_and_square = data_minus_avr_and_square_table,
             overall_average=overall_average,
             Qj=Qj_table,
             Tj=Tj_table,

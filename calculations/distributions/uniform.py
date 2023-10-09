@@ -1,8 +1,7 @@
 import random
 from loguru import logger
 from scipy.stats import uniform as uf
-from ..types import Statistic
-
+from models import Statistic
 
 
 def uniform(n: int=10000, custom: bool=True) -> Statistic:
@@ -91,4 +90,11 @@ def uniform(n: int=10000, custom: bool=True) -> Statistic:
 
 
     # return Statistic(array=sorted(array), variance=v, mean=m, standard_deviation=std, cdf=sorted(cdf))
-    return Statistic(array=sorted(array), variance=D, mean=m, standard_deviation=std, cdf=sorted(cdf))
+    return Statistic(
+        array=sorted(array),
+        variance=D,
+        mean=m,
+        standard_deviation=std,
+        cdf=sorted(cdf),
+        title='Равномерное распределение'
+        )
